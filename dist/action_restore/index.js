@@ -1174,12 +1174,13 @@ var restore_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _
 
 function restoreCache(destination, restoreKeys, cacheDir) {
     return restore_awaiter(this, void 0, void 0, function* () {
+        const absDestination = absPath(destination);
         try {
-            yield external_fs_.promises.access(absPath(destination));
+            yield external_fs_.promises.access(absDestination);
         }
         catch (err) {
             core.debug('Destination directory does not exist, creating.');
-            yield external_fs_.promises.mkdir(absPath(destination), { recursive: true });
+            yield external_fs_.promises.mkdir(absDestination, { recursive: true });
         }
         let contents;
         try {
@@ -1190,19 +1191,18 @@ function restoreCache(destination, restoreKeys, cacheDir) {
                 throw err;
             // cache dir doesn't exist
             core.warning(`Cache dir ${cacheDir} not found.`);
-            return [undefined, undefined, undefined]; // quick bailout
+            return [undefined, absDestination, undefined]; // quick bailout
         }
         const subdirs = contents.filter(x => x.isDirectory()).map(x => x.name);
         const [matchedKey, matchedDir] = keyMatch(restoreKeys, subdirs);
         if (matchedKey && matchedDir) {
             core.info(`Matched dir ${matchedDir} with key ${matchedKey}`);
             const absMatchedDir = external_path_.join(cacheDir, matchedDir);
-            const absDestination = absPath(destination);
             const exactMatch = matchedKey === matchedDir;
             yield copy(absMatchedDir, absDestination);
             return [absMatchedDir, absDestination, exactMatch];
         }
-        return [undefined, undefined, undefined];
+        return [undefined, absDestination, undefined];
     });
 }
 function keyMatch(keys, directories) {
