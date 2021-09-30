@@ -1207,11 +1207,11 @@ function run() {
     return action_save_awaiter(this, void 0, void 0, function* () {
         try {
             const cacheTarget = core.getState("L_CACHE_DST" /* destination */);
-            core.debug(`Cache target ${cacheTarget}`);
+            core.info(`Cache target ${cacheTarget}`);
             if (cacheTarget) {
                 const cacheDir = core.getState("L_CACHE_DIR" /* cacheDir */);
                 const key = core.getInput('key', { required: true });
-                core.debug(`Cache directory ${cacheDir}`);
+                core.info(`Cache directory ${cacheDir}`);
                 yield saveCache(key, cacheTarget, cacheDir);
             }
         }

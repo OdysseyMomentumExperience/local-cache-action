@@ -1236,10 +1236,10 @@ function run() {
             const restoreKeys = core.getMultilineInput('restore-keys');
             const cacheDir = core.getInput('cache-dir', { required: true });
             const saveKey = core.getInput('key', { required: true });
-            core.debug(`Cache ${path}`);
-            core.debug(`Restore keys: ${restoreKeys}`);
-            core.debug(`Destination : ${cacheDir}`);
-            core.debug(`Storage key : ${saveKey}`);
+            core.info(`Cache ${path}`);
+            core.info(`Restore keys: ${restoreKeys}`);
+            core.info(`Destination : ${cacheDir}`);
+            core.info(`Storage key : ${saveKey}`);
             const [matchedDir, destinationDir, exactMatch] = yield restoreCache(path, restoreKeys, cacheDir);
             // State for the post save action to pick up
             core.saveState("L_CACHE_MATCH" /* match */, matchedDir);
