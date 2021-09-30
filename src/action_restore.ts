@@ -10,10 +10,10 @@ async function run(): Promise<void> {
     const cacheDir: string = core.getInput('cache-dir', {required: true})
     const saveKey: string = core.getInput('key', {required: true})
 
-    core.debug(`Cache ${path}`)
-    core.debug(`Restore keys: ${restoreKeys}`)
-    core.debug(`Destination : ${cacheDir}`)
-    core.debug(`Storage key : ${saveKey}`)
+    core.info(`Cache ${path}`)
+    core.info(`Restore keys: ${restoreKeys}`)
+    core.info(`Destination : ${cacheDir}`)
+    core.info(`Storage key : ${saveKey}`)
 
     const [matchedDir, destinationDir, exactMatch] = await restoreCache(
       path,

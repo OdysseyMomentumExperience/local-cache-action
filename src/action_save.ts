@@ -6,11 +6,11 @@ import {saveCache} from './save'
 async function run(): Promise<void> {
   try {
     const cacheTarget = core.getState(State.destination)
-    core.debug(`Cache target ${cacheTarget}`)
+    core.info(`Cache target ${cacheTarget}`)
     if (cacheTarget) {
       const cacheDir = core.getState(State.cacheDir)
       const key = core.getInput('key', {required: true})
-      core.debug(`Cache directory ${cacheDir}`)
+      core.info(`Cache directory ${cacheDir}`)
       await saveCache(key, cacheTarget, cacheDir)
     }
   } catch (e: unknown) {
