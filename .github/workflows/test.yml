@@ -15,10 +15,18 @@ jobs:
           npm install
       - run: |
           npm run all
-  test: # make sure the action works on a clean machine without building
+  test:  # sortof an integration test
     runs-on: ubuntu-latest
+    if: contains(github.ref, "release")
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+        env:
+          cache-name: build
         with:
-          milliseconds: 1000
+          path: Library
+          key: foo-bar-baz
+          restore-keys: |
+            doesntexist
+            foo-bar-
+          cache-dir: ${{github.workspace}}/__tests__/cacheDir

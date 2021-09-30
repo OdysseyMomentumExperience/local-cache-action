@@ -1,11 +1,21 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Local directory cache'
+description: 'Cache to a local directory'
+author: 'Odyssey'
 inputs:
-  milliseconds: # change this
+  path:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Directory to cache, relative to working directory.'
+  key:
+    required: true
+    description: 'Key to use to store the cache.'
+  restore-keys:
+    required: true
+    description: 'Ordered list of keys to try to find existing cache entry.'
+  cache-dir:
+    required: true
+    description: 'Local cache directory.'
 runs:
   using: 'node12'
-  main: 'dist/index.js'
+  main: 'dist/action_restore/index.js'
+  post: 'dist/action_save/index.js'
+  post-if: 'success()'
