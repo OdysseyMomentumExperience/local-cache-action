@@ -9,11 +9,12 @@ export async function restoreCache(
   restoreKeys: string[],
   cacheDir: string
 ): Promise<[string?, string?, boolean?]> {
+  const absDestination = absPath(destination)
   try {
-    await fs.promises.access(absPath(destination))
+    await fs.promises.access(absDestination)
   } catch (err) {
     core.debug('Destination directory does not exist, creating.')
-    await fs.promises.mkdir(absPath(destination), {recursive: true})
+    await fs.promises.mkdir(absDestination, {recursive: true})
   }
 
   let contents: fs.Dirent[]
@@ -23,19 +24,18 @@ export async function restoreCache(
     if ((err as NodeJS.ErrnoException).code !== 'ENOENT') throw err
     // cache dir doesn't exist
     core.warning(`Cache dir ${cacheDir} not found.`)
-    return [undefined, undefined, undefined] // quick bailout
+    return [undefined, absDestination, undefined] // quick bailout
   }
   const subdirs = contents.filter(x => x.isDirectory()).map(x => x.name)
   const [matchedKey, matchedDir] = keyMatch(restoreKeys, subdirs)
   if (matchedKey && matchedDir) {
     core.info(`Matched dir ${matchedDir} with key ${matchedKey}`)
     const absMatchedDir = path.join(cacheDir, matchedDir)
-    const absDestination = absPath(destination)
     const exactMatch = matchedKey === matchedDir
     await copy(absMatchedDir, absDestination)
     return [absMatchedDir, absDestination, exactMatch]
   }
-  return [undefined, undefined, undefined]
+  return [undefined, absDestination, undefined]
 }
 
 function keyMatch(keys: string[], directories: string[]): [string?, string?] {
