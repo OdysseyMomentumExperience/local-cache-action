@@ -1,0 +1,26 @@
+import * as core from '@actions/core'
+
+import {State} from './constants'
+import {saveCache} from './save'
+
+async function run(): Promise<void> {
+  try {
+    const cacheTarget = core.getState(State.destination)
+    core.debug(`Cache target ${cacheTarget}`)
+    if (cacheTarget) {
+      const cacheDir = core.getState(State.cacheDir)
+      const key = core.getInput('key', {required: true})
+      core.debug(`Cache directory ${cacheDir}`)
+      await saveCache(key, cacheTarget, cacheDir)
+    }
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      core.setFailed(e.message)
+    } else {
+      core.setFailed(`${e}`)
+    }
+  }
+}
+
+run()
+export default run

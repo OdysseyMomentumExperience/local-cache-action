@@ -7,18 +7,32 @@ on: # rebuild any PRs and main branch changes
       - 'releases/*'
 
 jobs:
-  build: # make sure build/ci work properly
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - run: |
           npm install
       - run: |
           npm run all
-  test: # make sure the action works on a clean machine without building
+  test:  # sortof an integration test
     runs-on: ubuntu-latest
+    if: contains(github.ref, 'release')
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+        env:
+          cache-name: build
         with:
-          milliseconds: 1000
+          path: Library
+          key: foo-bar-baz
+          restore-keys: |
+            doesntexist
+            foo-bar-
+          cache-dir: ${{github.workspace}}/__tests__/cacheDir
