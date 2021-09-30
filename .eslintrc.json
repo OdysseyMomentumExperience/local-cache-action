@@ -44,11 +44,20 @@
       "semi": "off",
       "@typescript-eslint/semi": ["error", "never"],
       "@typescript-eslint/type-annotation-spacing": "error",
-      "@typescript-eslint/unbound-method": "error"
+      "@typescript-eslint/unbound-method": "error",
+
+      "filenames/match-regex": ["error", "^[a-z0-9-]+(.d)?$", true],
+      "i18n-text/no-en": "off",
+      "no-shadow": "off",
+      "@typescript-eslint/no-shadow": 1
+
     },
     "env": {
       "node": true,
       "es6": true,
       "jest/globals": true
+    },
+    "globals": {
+        "NodeJS": true
     }
   }

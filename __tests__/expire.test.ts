@@ -9,7 +9,7 @@ import {
   afterEach,
   jest
 } from '@jest/globals'
-import { subMonths, subDays } from 'date-fns'
+import {subMonths, subDays} from 'date-fns'
 
 import {expireCache} from '../src/expire'
 
