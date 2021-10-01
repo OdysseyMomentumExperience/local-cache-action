@@ -24784,7 +24784,8 @@ function expireCache(cacheDir) {
             core.debug(`${dir} : ${diff} days old`);
             if (diff > constants_1.EXPIRATION_DAYS) {
                 core.info(`Expiring ${dir}`);
-                yield fs.promises.rm(absDir, { recursive: true });
+                // await fs.promises.rm(absDir, {recursive: true})  // Required nodejs v14+
+                yield fs.promises.rmdir(absDir, { recursive: true });
             }
         }
     });
