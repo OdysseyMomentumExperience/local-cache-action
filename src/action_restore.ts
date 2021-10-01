@@ -10,13 +10,15 @@ async function run(): Promise<void> {
     const cacheDir: string = core.getInput('cache-dir', {required: true})
     const saveKey: string = core.getInput('key', {required: true})
 
-    core.debug(`Cache ${path}`)
-    core.debug(`Restore keys: ${restoreKeys}`)
-    core.debug(`Destination : ${cacheDir}`)
-    core.debug(`Storage key : ${saveKey}`)
+    if (core.isDebug()) {
+      core.debug(`Cache ${path}`)
+      core.debug(`Restore keys: ${restoreKeys}`)
+      core.debug(`Destination : ${cacheDir}`)
+      core.debug(`Storage key : ${saveKey}`)
+    }
 
     const allKeys = [saveKey, ...restoreKeys]
-    const [matchedDir, destinationDir, exactMatch] = await restoreCache(
+    const [matchedDir, destinationDir] = await restoreCache(
       path,
       allKeys,
       cacheDir
@@ -24,7 +26,6 @@ async function run(): Promise<void> {
     // State for the post save action to pick up
     core.saveState(State.match, matchedDir)
     core.saveState(State.destination, destinationDir)
-    core.saveState(State.exactMatch, exactMatch)
     core.saveState(State.cacheDir, cacheDir)
   } catch (e: unknown) {
     if (e instanceof Error) {

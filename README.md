@@ -7,10 +7,16 @@ Unlike [actions/cache](https://github.com/actions/cache),
 which compresses and uploads the cache to a http service hosted by github. 
 Which can be a bit slow on a self-hosted runner and is also limited to 5 GB.
 
-Instead this action just copies the contents between directories.
-
 
 ## Usage
+
+Point `cache-dir` to a directory writeable by (all) runners 
+(this could be a shared network directory like NFS).
+
+Works similar to action/cache@v1, with currently some limitation:
+ - Single `path` and no glob'ing
+ - No fancy expiration logic, just quick check of directory's ctime stamp
+
 
 Example action step:
 
@@ -35,14 +41,9 @@ Example action step:
 | `restore-key` | Key used to lookup existing cache entries (string prefix match) | |
 | `cache-dir` | Local directory on the self-hosted runner | |
 
-Works similar to action/cache@v1, with currently some limitation:
- - Single `path` and no glob'ing
- - No fancy expiration logic, just quick check of directory's ctime stamp
-
 
 
 ## Development
-
 
 Install the dependencies  
 ```bash
