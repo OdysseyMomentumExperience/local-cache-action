@@ -15,7 +15,7 @@ Point `cache-dir` to a directory writeable by (all) runners
 
 Works similar to action/cache@v1, with currently some limitation:
  - Single `path` and no glob'ing
- - No fancy expiration logic, just quick check of directory's ctime stamp
+ - No fancy expiration logic, just quick check of directory's mtime stamp and delete directories older then 30 days.
 
 
 Example action step:
