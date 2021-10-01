@@ -31,9 +31,10 @@ export async function restoreCache(
   if (matchedKey && matchedDir) {
     core.info(`Matched dir ${matchedDir} with key ${matchedKey}`)
     const absMatchedDir = path.join(cacheDir, matchedDir)
-    const exactMatch = matchedKey === matchedDir
     await copy(absMatchedDir, absDestination)
-    return [absMatchedDir, absDestination, exactMatch]
+    const now = new Date()
+    await fs.promises.utimes(absMatchedDir, now, now)
+    return [absMatchedDir, absDestination]
   }
   return [undefined, absDestination, undefined]
 }
