@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 
 import {State} from './constants'
+import {expireCache} from './expire'
 import {saveCache} from './save'
 
 async function run(): Promise<void> {
@@ -12,6 +13,7 @@ async function run(): Promise<void> {
       const key = core.getInput('key', {required: true})
       core.info(`Cache directory ${cacheDir}`)
       await saveCache(key, cacheTarget, cacheDir)
+      await expireCache(cacheDir)
     }
   } catch (e: unknown) {
     if (e instanceof Error) {
