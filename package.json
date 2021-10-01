@@ -1,9 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "local-cache-action",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
-  "main": "lib/main.js",
+  "description": "Github action to use a local directory for caching",
   "scripts": {
     "build": "tsc && ncc build -o dist/action_restore src/action_restore.ts && ncc build -o dist/action_save src/action_save.ts",
     "format": "prettier --write **/*.ts",
@@ -15,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/OdysseyMomentumExperience/local-cache-action"
   },
   "keywords": [
     "actions",
