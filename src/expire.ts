@@ -17,7 +17,8 @@ export async function expireCache(cacheDir: string): Promise<void> {
     core.debug(`${dir} : ${diff} days old`)
     if (diff > EXPIRATION_DAYS) {
       core.info(`Expiring ${dir}`)
-      await fs.promises.rm(absDir, {recursive: true})
+      // await fs.promises.rm(absDir, {recursive: true})  // Required nodejs v14+
+      await fs.promises.rmdir(absDir, {recursive: true})
     }
   }
 }

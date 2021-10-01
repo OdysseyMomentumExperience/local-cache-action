@@ -21,7 +21,7 @@ describe('expireCache', () => {
   })
   afterEach(async () => {
     jest.resetAllMocks()
-    await fs.promises.rm(tmpDir, {recursive: true})
+    await fs.promises.rmdir(tmpDir, {recursive: true})
   })
 
   beforeEach(async () => {

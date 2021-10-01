@@ -63,13 +63,20 @@ $ npm test
 ### Publish to a distribution branch
 
 Actions are run from GitHub repos so we will checkin the packed dist folder. 
+There is a 'moving' v1 style tag. 
+And for now, we keep the dist folder outside the main branch, so it's only commited in the release branches.
 
 Then run [ncc](https://github.com/zeit/ncc) and push the results:
 ```bash
+$ git checkout -b releases/v1
+$ git merge main
 $ npm run package
 $ git add dist
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
+$ git commit -a -m "Update dist for release"
+$ git tag -s "vX.Y.Z"
+$ git tag -s -f "v1"
+$ git push
+$ git pugh -f --tags
 ```
 
 Your action is now published! :rocket: 
