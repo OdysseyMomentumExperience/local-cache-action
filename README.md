@@ -22,7 +22,6 @@ Example action step:
           path: Library
           key: Library-WebGL-${{ env.cache-name }}-${{ hashFiles('.cache-base') }}-${{ hashFiles('.cache-version') }}
           restore-keys: |
-            Library-WebGL-${{ env.cache-name }}-${{ hashFiles('.cache-base') }}-${{ hashFiles('.cache-version') }}
             Library-WebGL-${{ env.cache-name }}-${{ hashFiles('.cache-base') }}-
           cache-dir: /tmp/foo
 ```
@@ -38,7 +37,7 @@ Example action step:
 
 Works similar to action/cache@v1, with currently some limitation:
  - Single `path` and no glob'ing
- - No matching on `key`, need to add/duplicate it in `restore-keys`
+ - No fancy expiration logic, just quick check of directory's ctime stamp
 
 
 

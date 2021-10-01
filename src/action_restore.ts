@@ -15,9 +15,10 @@ async function run(): Promise<void> {
     core.debug(`Destination : ${cacheDir}`)
     core.debug(`Storage key : ${saveKey}`)
 
+    const allKeys = [saveKey, ...restoreKeys]
     const [matchedDir, destinationDir, exactMatch] = await restoreCache(
       path,
-      restoreKeys,
+      allKeys,
       cacheDir
     )
     // State for the post save action to pick up
